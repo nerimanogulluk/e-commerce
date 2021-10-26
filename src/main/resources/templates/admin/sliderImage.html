@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="admin/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Slider Resimler</title>
+</head>
+<body>
+<section layout:fragment="header">
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Slider Resimler <small> Kontrol </small></h3>
+        </div>
+        <div class="card-body">
+            <form th:action="@{/admin/sliderImageInsert}"  method="post" enctype="multipart/form-data" >
+                <div>
+                    <label for="sImageName">Photo ID: </label>
+                    <input type="file" name="sImageName" id="sImageName" accept="image/png, image/jpeg, image/jpg" required />
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Kaydet </button>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="sTitle" class="control-label">Slider Title</label>
+                            <div>
+                                <input name="sTitle" type="text" class="form-control"
+                                       id="sTitle" placeholder="Slider Title" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-3">
+                         <label for="sSale" class="control-label">Slider Sale</label>
+                        <div>
+                            <input name="sSale" type="number" class="form-control" id="sSale" placeholder="slider sale" required>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <label for="summernote" class="control-label">Slider Description</label>
+                        <div class="form-group">
+                            <textarea id="summernote" name="sDescription" rows="10" cols="80"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-3" style=" margin-top: 200px; ">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <button type="reset" class="btn btn-danger"><i class="fa fa-eraser"></i> Temizle
+                                </button>
+                            </div>
+                            <div class="col-sm-6">
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Kaydet</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+<div layout:fragment="content">
+    <div class="card card-success">
+        <div class="card-header">
+            <h3 class="card-title">Slider Resim <small> Listesi </small></h3>
+        </div>
+        <div class="card-body">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>Slider Image ID</th>
+                    <th>Resim</th>
+                    <th>Başlık</th>
+                    <th>İndirim</th>
+                    <th>Açıklama</th>
+                    <th>Sil</th>
+                </tr>
+                </thead>
+                <tbody>
+                <th:block th:if="${SliderImageList} != null" th:each=" sImageitem, iter : ${SliderImageList} ">
+                    <tr>
+                        <td th:text="${sImageitem.sImageId}"></td>
+                        <!-- <td><img th:src="'/'+uploads+'/'+${imageitem.image_Name}" style="width: 80px;height: 80px;"></td> -->
+                        <td><img th:src="@{${'/uploads/'+sImageitem.sImageName}}" width="50" height="50"></td>
+                        <td th:text="${sImageitem.sTitle}"></td>
+                        <td th:text="${sImageitem.sSale}"></td>
+                        <td th:utext="${sImageitem.sDescription}"></td>
+                        <td>
+                            <a th:onclick="return deleteFnc()" th:href="'/'+admin+'/'+sliderImageDelete+'/'+${sImageitem.sImageId}"
+                               class="btn btn-danger btn-sm">
+                                <li class="fa fa-trash"></li>
+                                Sil</a>
+                        </td>
+                    </tr>
+                </th:block>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

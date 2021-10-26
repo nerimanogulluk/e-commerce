@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="admin/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Resimler</title>
+</head>
+<body>
+<section layout:fragment="header">
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title"> Resimler <small> Kontrol </small></h3>
+        </div>
+        <div class="card-body">
+            <form th:action="@{/admin/insertImage}"  method="post" enctype="multipart/form-data" >
+                <div>
+                    <label>Photo ID: </label>
+                    <input type="file" name="image_Name" accept="image/png, image/jpeg, image/jpg" required />
+                </div>
+                <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Kaydet</button>
+            </form>
+        </div>
+    </div>
+</section>
+<div layout:fragment="content">
+    <div class="card card-success">
+        <div class="card-header">
+            <h3 class="card-title"> Resim <small> Listesi </small></h3>
+        </div>
+        <div class="card-body">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>Image ID</th>
+                    <th>Image</th>
+                    <th>Product Name</th>
+                    <th>Date</th>
+                    <th>Sil</th>
+                </tr>
+                </thead>
+                <tbody>
+                <th:block th:if="${imageList} != null" th:each=" imageitem, iter : ${imageList} ">
+                    <tr>
+                        <td th:text="${imageitem.image_Id}"></td>
+                        <!-- <td><img th:src="'/'+uploads+'/'+${imageitem.image_Name}" style="width: 80px;height: 80px;"></td> -->
+                        <td><img th:src="@{${'/uploads/'+imageitem.image_Name}}" width="50" height="50"></td>
+
+                        <td>
+                            <th:block th:if="${products} != null" th:each=" ipitem, iter : ${products} ">
+                                <th:block th:if="${ipitem.pid == imageitem.pid}">
+                                    <p th:text="${ ipitem.ptitle }"></p>
+                                </th:block>
+                            </th:block>
+                        </td>
+
+                        <td th:text="${imageitem.image_Date}"></td>
+
+                        <td>
+                            <a th:onclick="return deleteFnc()" th:href="'/'+admin+'/'+imageDelete+'/'+${imageitem.image_Id}"
+                               class="btn btn-danger btn-sm">
+                                <li class="fa fa-trash"></li>
+                                Sil</a>
+                        </td>
+                    </tr>
+                </th:block>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

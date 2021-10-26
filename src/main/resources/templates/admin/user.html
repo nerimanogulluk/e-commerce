@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="admin/layout">
+<head>
+    <title>Kullanıcı</title>
+</head>
+<body>
+<section layout:fragment="header">
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title"> Kullanıcı <small> Kontrol </small></h3>
+        </div>
+        <div class="card-body">
+            <form th:if="${updateStatus == true}" th:action="'/'+admin+'/'+userUpdateSave" th:method="post">
+                <input type="hidden" name="id" th:value="${singleUser.id}">
+                <div class="row">
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="username" class=" control-label">Kullanıcı Adı</label>
+                            <div>
+                                <input th:value="${singleUser.username}" name="username" type="text"
+                                       class="form-control"
+                                       id="username" placeholder="Kullanıcı Adı" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="roleStatus" class="control-label">Kullanıcı Rolü</label>
+                            <div>
+                                <select name="id" id="roleStatus" class="form-control select2" tabindex="-1"
+                                        aria-hidden="true" required>
+                                    <option>Lütfen Seçiniz</option>
+                                    <th:block th:if="${roles} != null" th:each=" item, iter : ${roles} ">
+                                        <option th:selected="${ singleUser.id ==  item.id ? true : false  }"
+                                                th:value="${item.id}" th:text="${item.name}"></option>
+                                    </th:block>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="password" class="control-label">Kullanıcı Şifresi</label>
+                            <div>
+                                <input name="password" type="password"
+                                       class="form-control"
+                                       id="password" placeholder="Kullanıcı Şifre" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="full_name" class="control-label">Tam Adı</label>
+                            <div>
+                                <input th:value="${singleUser.full_name}" name="full_name" type="text"
+                                       class="form-control"
+                                       id="full_name" placeholder="Tam Adı" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="email" class="control-label">E-mail</label>
+                            <div>
+                                <input th:value="${singleUser.email}" name="email" type="email"
+                                       class="form-control"
+                                       id="email" placeholder="email" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="enabled" class="control-label">Enabled</label>
+                            <div>
+                                <input th:value="${ singleUser.enabled ? 1 : 0 }" name="enabled" type="number"
+                                       class="form-control" maxlength="1" minlength="0"
+                                       id="enabled" placeholder="Enabled" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3" style=" margin-top: 200px; ">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <button type="reset" class="btn btn-danger"><i class="fa fa-eraser"></i> Temizle
+                            </button>
+                        </div>
+                        <div class="col-sm-6">
+                            <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Kaydet</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="card-body">
+            <form th:if="${updateStatus == false}" th:action="userAdd" th:method="post">
+                <div class="row">
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="username" class="control-label">Kullanıcı Adı</label>
+                            <div>
+                                <input name="username" type="text" class="form-control" id="username"
+                                       placeholder="Kullanıcı Adı" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="rolStatus" class="control-label">Kullanıcı Rolü</label>
+                            <div>
+                                <select name="name" id="rolStatus" class="form-control select2" tabindex="-1"
+                                        aria-hidden="true" required>
+                                    <option>Lütfen Seçiniz</option>
+                                    <th:block th:if="${roles} != null" th:each=" item, iter : ${roles} ">
+                                        <option th:value="${item.id}" th:text="${item.name}"></option>
+                                    </th:block>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="password" class="control-label">Kullanıcı Şifresi</label>
+                            <div>
+                                <input name="password" type="password" class="form-control" id="password"
+                                       placeholder="Kullanıcı Şifre" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="full_name" class="control-label">Tam Adı</label>
+                            <div>
+                                <input name="full_name" type="text" class="form-control" id="full_name"
+                                       placeholder="Tam Adı" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="email" class="control-label">Email</label>
+                            <div>
+                                <input name="email" type="email" class="form-control" id="email"
+                                       placeholder="Email" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="enabled" class="control-label">Enabled</label>
+                            <div>
+                                <select name="enabled" id="enabled" class="form-control select2" tabindex="-1"
+                                        aria-hidden="true" required>
+                                    <option th:value="true">1</option>
+                                    <option>0</option>
+                                </select>
+                            </div>
+                           <!-- <div><input name="enabled" type="number" class="form-control" id="enabled"
+                                       placeholder="enabled" required></div> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-9"></div>
+                    <div class="col-3" style="margin-top: 30px">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <button type="reset" class="btn btn-danger"><i class="fa fa-eraser"></i> Temizle
+                                </button>
+                            </div>
+                            <div class="col-sm-6">
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Kaydet</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</section>
+<div layout:fragment="content">
+    <div class="card card-success">
+        <div class="card-header">
+            <h3 class="card-title">Kullanıcı <small> Listesi </small></h3>
+        </div>
+        <div class="card-body">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Adı</th>
+                    <th>Tam İsim</th>
+                    <th>Rolü</th>
+                    <th>E-mail</th>
+                    <th>Şifre</th>
+                    <th>Enabled</th>
+                    <th>Sil / Düzenle</th>
+                </tr>
+                </thead>
+                <tbody>
+                <th:block th:if="${users} != null" th:each=" item, iter : ${users} ">
+                    <tr>
+                        <td th:text="${item.id}"></td>
+                        <td th:text="${item.username}"></td>
+                        <td th:text="${item.full_name}"></td>
+                        <td>
+                            <th:block th:if="${roles} != null" th:each=" ruitem, iter : ${roles} ">
+                                <th:block th:if="${ruitem.id == item.id}">
+                                    <p th:text="${ ruitem.name }"></p>
+                                </th:block>
+                            </th:block>
+                        </td>
+                        <td th:text="${item.email}"></td>
+                        <td>-</td>
+                        <td th:text="${item.enabled}"></td>
+                        <td><a th:onclick="return deleteFnc()" th:href="'/'+admin+'/'+userDelete+'/'+${item.id}"
+                               class="btn btn-danger btn-sm">
+                            <li class="fa fa-trash"></li>
+                            Sil</a>
+                            <a th:href="'/'+admin+'/'+userUpdate+'/'+${item.id}" class="btn btn-success btn-sm">
+                                <li class="fa fa-edit"></li>
+                                Düzenle</a>
+                        </td>
+                    </tr>
+                </th:block>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>

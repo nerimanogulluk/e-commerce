@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="site/layout">
+<head>
+  <title> E-Ticaret </title>
+</head>
+<body>
+
+
+<div layout:fragment="category" class="col-lg-3 mb-2">
+  <div class="side-menu-wrapper">
+    <h2 class="side-menu-title">Kategoriler</h2>
+
+    <div class="side-menu-body pt-2 mb-2 px-3 mx-3">
+      <ul class="side-menu mb-1 pb-1">
+        <li th:each="citem : ${ category } ">
+          <a th:href="'/'+category+'/'+${citem.cid}" ><i class="icon-category-steering"></i> <th:block th:text="${citem.title}" ></th:block> </a>
+        </li>
+      </ul>
+
+      <a href="#" class="btn btn-block btn-dark btn-lg px-0">Huge Sale - <strong>70%</strong> Off</a>
+    </div><!-- End .side-menu-body -->
+  </div><!-- End .side-custom-menu -->
+</div><!-- End .col-lg-3 -->
+<div layout:fragment="slider" class="col-lg-9 mb-2">
+
+  <h2> İletişim Bilgileri </h2>
+  <div class="row" style="margin-bottom: 10px;">
+    <div class="col-sm-1"> <i class="fas fa-address-book" style="font-size: 25px"></i> </div>
+    <div class="col-sm-11"> Esentepe, Ecza Sokağı No:4, 34394 Şişli/İstanbul </div>
+  </div>
+
+  <div class="row" style="margin-bottom: 10px;">
+    <div class="col-sm-1"> <i class="fas fa-phone-alt" style="font-size: 25px"></i> </div>
+    <div class="col-sm-11"> <a href="tel:+905347061470" class="font1">+90 534 706 14 70</a>  </div>
+  </div>
+
+  <div class="row" style="margin-bottom: 10px;">
+    <div class="col-sm-1"> <i class="far fa-envelope-open" style="font-size: 25px"></i> </div>
+    <div class="col-sm-11"> <a href="mailto:info@blue-ram.net" class="font1">info@blue-ram.net</a>  </div>
+  </div>
+
+    <br />
+    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12030.17238539467!2d29.010334!3d41.078979!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab667ef7ee31b%3A0xb0aacc4a466ec1f7!2zRXNlbnRlcGUsIEVjemEgU29rYcSfxLEgTm86NCwgMzQzOTQgxZ5pxZ9saS_EsHN0YW5idWw!5e0!3m2!1str!2str!4v1627837308336!5m2!1str!2str" width="100%" height="100%" style="border:0; height: 250px;" allowfullscreen="" loading="lazy"></iframe>
+
+</div><!-- End .col-lg-9 -->
+
+<div layout:fragment="content"></div>
+
+</body>
+</html>

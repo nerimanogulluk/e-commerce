@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="admin/layout">
+<head>
+    <title>İçerikler</title>
+</head>
+<body>
+<section layout:fragment="header">
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title"> İçerik <small> Kontrol </small></h3>
+        </div>
+        <div class="card-body">
+            <form th:if="${updateStatus == true}" th:action="'/'+admin+'/'+contentUpdateSave" th:method="post">
+                <input type="hidden" name="content_id" th:value="${singleContent.content_id}">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="content_title" class="control-label">İçerik Başlık</label>
+                            <div>
+                                <input th:value="${singleContent.content_title}" name="content_title" type="text"
+                                       class="form-control"
+                                       id="content_title" placeholder="İçerik başlık" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="content_description" class="control-label">İçerik Açıklaması</label>
+                            <div>
+                                <input th:value="${singleContent.content_description}" name="content_description"
+                                       type="text" class="form-control"
+                                       id="content_description" placeholder="İçerik Açıklaması" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-9">
+                        <label for="summernote" class=" control-label">İçerik Detayı</label>
+                        <div class="form-group">
+                            <textarea id="summernote" name="content_detail" rows="10" cols="80"
+                                      th:text="${singleContent.content_detail}"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="col-3" style=" margin-top: 200px; ">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <button type="reset" class="btn btn-danger"><i class="fa fa-eraser"></i> Temizle
+                                </button>
+                            </div>
+                            <div class="col-sm-6">
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Kaydet</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="card-body">
+            <form th:if="${updateStatus == false}" th:action="contentAdd" th:method="post">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="content_title" class="control-label">İçerik Başlığı</label>
+                            <div>
+                                <input name="content_title" type="text" class="form-control" id="content_title"
+                                       placeholder="İçerik Başlığı" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="content_description" class="control-label">İçerik Açıklaması</label>
+                            <div>
+                                <input name="content_description" type="text" class="form-control"
+                                       id="content_description" placeholder="İçerik Açıklaması" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-9">
+                        <label for="summernote" class="control-label">İçerik Detay</label>
+                        <div class="form-group">
+                            <textarea id="summernote" name="content_detail" rows="10" cols="80"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-3" style=" margin-top: 200px; ">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <button type="reset" class="btn btn-danger"><i class="fa fa-eraser"></i> Temizle
+                                </button>
+                            </div>
+                            <div class="col-sm-6">
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Kaydet</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+<div layout:fragment="content">
+    <div class="card card-success">
+        <div class="card-header">
+            <h3 class="card-title">İçerik <small> Listesi </small></h3>
+        </div>
+        <div class="card-body">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>İçerik Başlık</th>
+                    <th>İçerik Açıklaması</th>
+                    <th>İçerik Detay</th>
+                    <th>Sil / Düzenle</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <th:block th:if="${contents} != null" th:each=" item, iter : ${contents} ">
+                    <tr>
+                        <td th:text="${item.content_id}"></td>
+                        <td th:text="${item.content_title}"></td>
+                        <td th:text="${item.content_description}"></td>
+                        <td th:text="${item.content_detail}"></td>
+                        <td><a th:onclick="return deleteFnc()" th:href="'/'+admin+'/'+contentDelete+'/'+${item.content_id}"
+                               class="btn btn-danger btn-sm">
+                            <li class="fa fa-trash"></li>
+                            Sil </a>
+                            <a th:href="'/'+admin+'/'+contentUpdate+'/'+${item.content_id}"
+                               class="btn btn-success btn-sm">
+                                <li class="fa fa-edit"></li>
+                                Düzenle </a>
+                        </td>
+                    </tr>
+                </th:block>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

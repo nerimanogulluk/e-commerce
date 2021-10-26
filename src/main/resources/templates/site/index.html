@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="site/layout">
+<head>
+  <title> E-Ticaret </title>
+</head>
+<body>
+
+
+<div layout:fragment="category" class="col-lg-3 mb-2">
+  <div class="side-menu-wrapper">
+    <h2 class="side-menu-title">Kategoriler</h2>
+
+    <div class="side-menu-body pt-2 mb-2 px-3 mx-3">
+      <ul class="side-menu mb-1 pb-1">
+        <li th:each="citem : ${ category } ">
+          <a th:href="'/'+category+'/'+${citem.cid}" ><i class="fas fa-square"></i> <th:block th:text="${citem.title}" ></th:block> </a>
+        </li>
+      </ul>
+
+      <a href="#" class="btn btn-block btn-dark btn-lg px-0">Dev İndirim - <strong>70%</strong></a>
+    </div><!-- End .side-menu-body -->
+  </div><!-- End .side-custom-menu -->
+</div><!-- End .col-lg-3 -->
+<div layout:fragment="slider" class="col-lg-9 mb-2">
+  <div class="home-slider owl-carousel owl-theme owl-carousel-lazy" data-owl-options="{
+							'dots': true,
+							'nav': false
+						}">
+    <div class="home-slide home-slide1 banner banner-md-vw banner-sm-vw">
+      <img class="owl-lazy slide-bg" src="front/images/png/lazy.png" data-src="front/images/jpg/slide-1.jpg" alt="slider image">
+      <div class="banner-layer banner-layer-middle">
+        <!--<h4 class="text-white m-b-3">Find the Boundaries. Push Through!</h4>-->
+        <h2 class="text-white mb-0">YAZA ÖZEL</h2>
+        <h3 class="text-white text-uppercase m-b-3">%30 İNDİRİM</h3>
+        <h5 class="text-white text-uppercase d-inline-block mb-0"><b class="coupon-sale-text text-secondary"><em class="align-text-top">99</em>₺</b><b>'den başlayan fiyatlar</b></h5>
+        <a th:href="@{'/'}" class="btn btn-dark">Alışverişe Başla!</a>
+      </div><!-- End .banner-layer -->
+    </div>
+
+    <!--<div class="home-slide home-slide2 banner banner-md-vw banner-sm-vw">
+      <img class="owl-lazy slide-bg" src="front/images/png/lazy.png" data-src="front/images/jpg/slide-2.jpg" alt="slider image">
+      <div class="banner-layer banner-layer-middle text-uppercase">
+        <h4 class="m-b-2">Over 200 products with discounts</h4>
+        <h2 class="m-b-3">Great Deals</h2>
+        <h5 class="d-inline-block mb-0 align-top mr-5">Starting At <b>$<em>299</em>99</b></h5>
+        <a href="category.html" class="btn btn-dark">Get Yours!</a>
+      </div>
+    </div> End .home-slide -->
+
+    <!-- <div class="home-slide home-slide3 banner banner-md-vw banner-sm-vw">
+       <img class="owl-lazy slide-bg" data-src="front/images/jpg/slide-3.jpg"></img>
+       <div class="banner-layer banner-layer-middle text-uppercase">
+         <h4 class="m-b-2">Up to 70% off</h4>
+         <h2 class="m-b-3">New Arrivals</h2>
+         <h5 class="d-inline-block mb-0 align-top mr-5">Starting At <b>$<em>299</em>99</b></h5>
+         <a href="category.html" class="btn btn-dark">Get Yours!</a>
+       </div>
+    </div> End .home-slide -->
+  </div><!-- End .home-slider -->
+</div><!-- End .col-lg-9 -->
+
+<div layout:fragment="content"></div>
+
+</body>
+</html>

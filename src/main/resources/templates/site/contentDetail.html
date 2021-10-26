@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="site/layout">
+<head>
+  <title> E-Ticaret </title>
+</head>
+<body>
+
+
+<div layout:fragment="category" class="col-lg-3 mb-2">
+  <div class="side-menu-wrapper">
+    <h2 class="side-menu-title">Kategoriler</h2>
+
+    <div class="side-menu-body pt-2 mb-2 px-3 mx-3">
+      <ul class="side-menu mb-1 pb-1">
+        <li th:each="citem : ${ category } ">
+          <a th:href="'/'+category+'/'+${citem.cid}" ><i class="fas fa-square"></i> <th:block th:text="${citem.title}" ></th:block> </a>
+        </li>
+      </ul>
+
+      <a href="#" class="btn btn-block btn-dark btn-lg px-0">Huge Sale - <strong>70%</strong> Off</a>
+    </div><!-- End .side-menu-body -->
+  </div><!-- End .side-custom-menu -->
+</div><!-- End .col-lg-3 -->
+<div layout:fragment="slider" class="col-lg-9 mb-2">
+
+    <h2 th:text="${ content.content_title }" > </h2>
+    <p  th:utext="${ content.content_description }"  ></p>
+    <div th:utext="${ content.content_detail }" ></div>
+
+
+</div><!-- End .col-lg-9 -->
+
+<div layout:fragment="content"></div>
+
+</body>
+</html>

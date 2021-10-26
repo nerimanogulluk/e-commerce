@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="admin/layout">
+<head>
+    <title>Kategoriler</title>
+</head>
+<body>
+<section layout:fragment="header">
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title"> Kategori <small> Kontrol </small></h3>
+        </div>
+        <div class="card-body">
+            <form th:action="categoryAdd" th:method="post">
+                <div class="row">
+                    <div class="col-5">
+                        <div class="form-group">
+                            <label for="catName" class="control-label">Kategori Adı</label>
+                            <input name="title" type="text" class="form-control" id="catName"
+                                   placeholder="Kategori Adı" required>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="catStatus" class="control-label">Kategori Durum</label>
+                            <div>
+                                <select name="status" id="catStatus" class="form-control select2" tabindex="-1"
+                                        aria-hidden="true" required>
+                                    <option>Lütfen Seçiniz</option>
+                                    <option value="0">Ana Kategori</option>
+                                    <th:block th:if="${categories} != null" th:each=" item, iter : ${categories} ">
+                                        <th:block th:if="${item.status} == 0">
+                                            <option th:value="${item.cid}" th:text="${item.title}"></option>
+                                        </th:block>
+                                    </th:block>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3" style=" margin-top: 30px; ">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <button type="reset" class="btn btn-danger"><i class="fa fa-eraser"></i> Temizle
+                                </button>
+                            </div>
+                            <div class="col-sm-6">
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Kaydet</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+<div layout:fragment="content">
+    <div class="card card-success">
+        <div class="card-header">
+            <h3 class="card-title"> Kategori <small> Listesi </small></h3>
+        </div>
+        <div class="card-body">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Kategori Adı</th>
+                    <th>Durum</th>
+                    <th>Sil</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <th:block th:if="${categories} != null" th:each=" item, iter : ${categories} ">
+                    <tr>
+                        <td th:text="${item.cid}"></td>
+                        <td th:text="${item.title}"></td>
+                        <td th:text="${ item.status == 0 ? 'Ana Kategori' : item.status }"></td>
+                        <td><a th:onclick="return deleteFnc()" th:href="'/'+admin+'/'+categoryDelete+'/'+${item.cid}"
+                               class="btn btn-danger btn-sm">
+                            <li class="fa fa-trash"></li>
+                            Sil</a></td>
+                    </tr>
+                </th:block>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

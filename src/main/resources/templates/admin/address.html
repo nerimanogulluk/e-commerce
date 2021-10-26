@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="admin/layout">
+<head>
+    <title>Adresler</title>
+</head>
+<body>
+<section layout:fragment="header">
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title"> Adres <small> Kontrol </small></h3>
+        </div>
+        <div class="card-body">
+            <form th:if="${updateStatus == true}" th:action="'/'+admin+'/'+addressUpdateSave" th:method="post">
+                <input type="hidden" name="aid" th:value="${singleAddress.aid}">
+                <div class="row">
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="uStatus" class="control-label">Kullanıcı</label>
+                            <div>
+                                <select name="id" id="uStatus" class="form-control select2" tabindex="-1"
+                                        aria-hidden="true" required>
+                                    <option>Lütfen Seçiniz</option>
+                                    <th:block th:if="${users} != null" th:each=" item, iter : ${users} ">
+                                        <option th:selected="${ singleAddress.id ==  item.id ? true : false  }"
+                                                th:value="${item.id}" th:text="${item.username}"></option>
+                                    </th:block>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="addressTitle" class="control-label">Adres Başlığı</label>
+                            <div>
+                                <input th:value="${singleAddress.addressTitle}" name="addressTitle" type="text"
+                                       class="form-control" id="addressTitle" placeholder="Adres başlığı" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="city" class="control-label">Şehir</label>
+                            <div>
+                                <input th:value="${singleAddress.city}" name="city" type="text" class="form-control"
+                                       id="city" placeholder="Şehir" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="county" class="control-label">İlçe</label>
+                            <div>
+                                <input th:value="${singleAddress.county}" name="county" type="text" class="form-control"
+                                       id="county" placeholder="Şehir" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-9">
+                        <label for="summernote" class=" control-label">Adres Detayı</label>
+                        <div class="form-group">
+                            <textarea id="summernote" name="addressDetails" rows="10" cols="80"
+                                      th:text="${singleAddress.addressDetails}"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="col-3" style=" margin-top: 200px; ">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <button type="reset" class="btn btn-danger"><i class="fa fa-eraser"></i> Temizle
+                                </button>
+                            </div>
+                            <div class="col-sm-6">
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Kaydet</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="card-body">
+            <form th:if="${updateStatus == false}" th:action="addressAdd" th:method="post">
+                <div class="row">
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="userStatus" class="control-label">Kullanıcı</label>
+                            <div>
+                                <select name="id" id="userStatus" class="form-control select2" tabindex="-1"
+                                        aria-hidden="true" required>
+                                    <option>Lütfen Seçiniz</option>
+                                    <th:block th:if="${users} != null" th:each=" item, iter : ${users} ">
+                                        <option th:value="${item.id}" th:text="${item.username}"></option>
+                                    </th:block>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="addressTitle" class="control-label">Adres Başlığı</label>
+                            <div>
+                                <input name="addressTitle" type="text" class="form-control" id="addressTitle"
+                                       placeholder="Adres Başlığı" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="city" class="control-label"> Şehir </label>
+                            <div>
+                                <input name="city" type="text" class="form-control" id="city" placeholder="Şehir"
+                                       required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="county" class="control-label"> İlçe </label>
+                            <div>
+                                <input name="county" type="text" class="form-control" id="county" placeholder="İlçe"
+                                       required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-9">
+                        <label for="summernote" class="control-label">Adres Detay</label>
+                        <div class="form-group">
+                            <textarea id="summernote" name="addressDetails" rows="10" cols="80"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="col-3" style=" margin-top: 200px; ">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <button type="reset" class="btn btn-danger"><i class="fa fa-eraser"></i> Temizle
+                                </button>
+                            </div>
+                            <div class="col-sm-6">
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Kaydet</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+<div layout:fragment="content">
+    <div class="card card-success">
+        <div class="card-header">
+            <h3 class="card-title"> Adres <small> Listesi </small></h3>
+        </div>
+        <div class="card-body">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>AdresID</th>
+                    <th>Kullanıcı</th>
+                    <th>Adres Başlığı</th>
+                    <th>Şehir</th>
+                    <th>İlçe</th>
+                    <th>Adres Detay</th>
+                    <th>Sil / Düzenle</th>
+                </tr>
+                </thead>
+                <tbody>
+                <th:block th:if="${addresses} != null" th:each=" aitem, iter : ${addresses} ">
+                    <tr>
+                        <td th:text="${aitem.aid}"></td>
+                        <th:block th:if="${users} != null" th:each=" auitem, iter : ${users} ">
+                            <th:block th:if="${auitem.id == aitem.id}">
+                                <td th:text="${ auitem.username }"></td>
+                            </th:block>
+                        </th:block>
+                        <td th:text="${aitem.addressTitle}"></td>
+                        <td th:text="${aitem.city}"></td>
+                        <td th:text="${aitem.county}"></td>
+                        <td th:text="${aitem.addressDetails}"></td>
+                        <td>
+                            <a th:onclick="return deleteFnc()" th:href="'/'+admin+'/'+addressDelete+'/'+${aitem.aid}"
+                               class="btn btn-danger btn-sm">
+                                <li class="fa fa-trash"></li>
+                                Sil</a>
+                            <a th:href="'/'+admin+'/'+addressUpdate+'/'+${aitem.aid}" class="btn btn-success btn-sm">
+                                <li class="fa fa-edit"></li>
+                                Düzenle</a>
+                        </td>
+                    </tr>
+                </th:block>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="admin/layout">
+<head>
+    <title>Ürünler</title>
+</head>
+<body>
+<section layout:fragment="header">
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title"> Ürünler <small> Kontrol </small></h3>
+        </div>
+        <div class="card-body">
+            <form th:if="${updateStatus == true}" th:action="'/'+admin+'/'+productUpdateSave" th:method="post">
+                <input type="hidden" name="pid" th:value="${singleProduct.pid}">
+                <div class="row">
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="ptitle" class=" control-label">Ürün Adı</label>
+                            <div>
+                                <input th:value="${singleProduct.ptitle}" name="ptitle" type="text" class="form-control"
+                                       id="ptitle" placeholder="Ürün Adı" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="catStatus" class="control-label">Kategori</label>
+                            <div>
+                                <select name="cid" id="catStatus" class="form-control select2" tabindex="-1"
+                                        aria-hidden="true" required>
+                                    <option>Lütfen Seçiniz</option>
+                                    <th:block th:if="${categories} != null" th:each=" item, iter : ${categories} ">
+                                        <option th:selected="${ singleProduct.cid ==  item.cid ? true : false  }"
+                                                th:value="${item.cid}" th:text="${item.title}"></option>
+                                    </th:block>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="price" class="control-label">Ürün Fiyat</label>
+                            <div>
+                                <input th:value="${singleProduct.price}" name="price" type="number" class="form-control"
+                                       id="price" placeholder="Ürün Fiyat" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-9">
+                        <label for="summernote" class=" control-label">Ürün Detayı</label>
+                        <div class="form-group">
+                            <textarea id="summernote" name="detail" rows="10" cols="80"
+                                      th:text="${singleProduct.detail}"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-3" style=" margin-top: 200px; ">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <button type="reset" class="btn btn-danger"><i class="fa fa-eraser"></i> Temizle
+                                </button>
+                            </div>
+                            <div class="col-sm-6">
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Kaydet</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="card-body">
+            <form th:if="${updateStatus == false}" th:action="productAdd" th:method="post">
+                <div class="row">
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="ptitle" class="control-label">Ürün Adı</label>
+                            <div>
+                                <input name="ptitle" type="text" class="form-control" id="ptitle" placeholder="Ürün Adı"
+                                       required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="catStatus" class="control-label">Ürün Kategorisi</label>
+                            <div>
+                                <select name="cid" id="catStatus" class="form-control select2" tabindex="-1"
+                                        aria-hidden="true" required>
+                                    <option>Lütfen Seçiniz</option>
+                                    <th:block th:if="${categories} != null" th:each=" item, iter : ${categories} ">
+                                        <option th:value="${item.cid}" th:text="${item.title}"></option>
+                                    </th:block>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="price" class="control-label">Ürün Fiyat</label>
+                            <div>
+                                <input name="price" type="number" class="form-control" id="price"
+                                       placeholder="Ürün Fiyat"
+                                       required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-9">
+                        <label for="summernote" class="control-label">Ürün Detay</label>
+                        <div class="form-group">
+                            <textarea id="summernote" name="detail" rows="10" cols="80"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-3" style=" margin-top: 200px; ">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <button type="reset" class="btn btn-danger"><i class="fa fa-eraser"></i> Temizle
+                                </button>
+                            </div>
+                            <div class="col-sm-6">
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Kaydet</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<div layout:fragment="content">
+    <div class="card card-success">
+        <div class="card-header">
+            <h3 class="card-title"> Ürün <small> Listesi </small></h3>
+        </div>
+        <div class="card-body">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Ürün Adı</th>
+                    <th>Ürün Kategorisi</th>
+                    <th>Fiyat</th>
+                    <th>Ürün Detay</th>
+                    <th>Sil / Düzenle</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <th:block th:if="${products} != null" th:each=" pitem, iter : ${products} ">
+                    <tr>
+                        <td th:text="${pitem.pid}"></td>
+                        <td th:text="${pitem.ptitle}"></td>
+                        <th:block th:if="${categories} != null" th:each=" pcitem, iter : ${categories} ">
+                            <th:block th:if="${pcitem.cid == pitem.cid}">
+                                <td th:text="${ pcitem.title }"></td>
+                            </th:block>
+                        </th:block>
+                        <td th:text="${pitem.price}+'₺'"></td>
+                        <td th:utext="${pitem.detail}">  </td>
+                        <td>
+                            <a th:onclick="return deleteFnc()" th:href="'/'+admin+'/'+productDelete+'/'+${pitem.pid}"
+                               class="btn btn-danger btn-sm">
+                                <li class="fa fa-trash"></li>
+                                Sil</a>
+                            <a th:href="'/'+admin+'/'+productUpdate+'/'+${pitem.pid}"
+                               class="btn btn-success btn-sm">
+                                <li class="fa fa-edit"></li>
+                                Düzenle</a>
+                            <a th:href="'/'+admin+'/'+image+'/'+${pitem.pid}"
+                               class="btn btn-primary btn-sm">
+                                <li class="fa fa-image"></li>
+                                Resim Yükle</a>
+                        </td>
+                    </tr>
+                </th:block>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

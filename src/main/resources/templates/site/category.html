@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="site/layout">
+<head>
+  <title> E-Ticaret </title>
+</head>
+<body>
+
+
+<div layout:fragment="category" class="col-lg-3 mb-2">
+  <div class="side-menu-wrapper">
+    <h2 class="side-menu-title">Kategoriler</h2>
+
+    <div class="side-menu-body pt-2 mb-2 px-3 mx-3">
+      <ul class="side-menu mb-1 pb-1">
+        <li th:each="citem : ${ category } ">
+          <a th:href="'/'+category+'/'+${citem.cid}" ><i class="fas fa-square"></i> <th:block th:text="${citem.title}" ></th:block> </a>
+        </li>
+      </ul>
+
+      <a href="#" class="btn btn-block btn-dark btn-lg px-0">Huge Sale - <strong>70%</strong> Off</a>
+    </div><!-- End .side-menu-body -->
+  </div><!-- End .side-custom-menu -->
+</div><!-- End .col-lg-3 -->
+<div layout:fragment="slider" class="col-lg-9 mb-2">
+
+  <div class="container">
+
+      <h2 class="section-title"  th:text=" ${ allCatProduct.size() > 0 ? allCatProduct.get(0).title + ' Ürünleri' : 'Ürün Yok' } "  > </h2>
+
+    <th:block th:if="${ allCatProduct.size() == 0 }">
+      <p> Bu kategori altında henüz ürün yok! </p>
+    </th:block>
+
+    <div class="products-slider owl-carousel owl-theme dots-top" >
+
+      <div class="product-default inner-quickview inner-icon"   th:each="pitem : ${ allCatProduct }">
+        <figure>
+          <a th:href="@{'/detail/'+ ${pitem.pid} }" >
+            <img th:src="@{'/uploads/'+ ${pitem.imageName} }" >
+          </a>
+          <div class="label-group">
+            <div class="product-label label-hot">YENİ</div>
+          </div>
+          <div class="btn-icon-group">
+            <button class="btn-icon btn-add-cart" data-toggle="modal" data-target="#addCartModal"><i class="icon-shopping-cart"></i></button>
+          </div>
+          <a th:href="@{'/detail/'+ ${pitem.pid} }" class="btn-quickview" title="Quick View">Ayrıntıyı Gör</a>
+        </figure>
+        <div class="product-details">
+          <h3 class="product-title">
+            <a th:href="@{'/detail/'+ ${pitem.pid} }" th:text="${pitem.ptitle}" ></a>
+          </h3>
+          <div class="ratings-container">
+            <div class="product-ratings">
+              <span class="ratings" style="width:100%"></span><!-- End .ratings -->
+              <span class="tooltiptext tooltip-top"></span>
+            </div><!-- End .product-ratings -->
+          </div><!-- End .product-container -->
+          <div class="price-box">
+            <span class="old-price" th:text="${ (pitem.price *1.3) }+'₺'" ></span>
+            <span class="product-price" th:text="${pitem.price}+'₺'" ></span>
+          </div><!-- End .price-box -->
+        </div><!-- End .product-details -->
+      </div>
+    </div>
+
+  </div>
+
+
+</div><!-- End .col-lg-9 -->
+
+<div layout:fragment="content"></div>
+
+</body>
+</html>

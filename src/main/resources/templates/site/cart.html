@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="site/layout">
+<head>
+  <title>Detail</title>
+</head>
+<body>
+
+<div layout:fragment="detail" class="col-lg-12 mb-2">
+
+    <nav aria-label="breadcrumb" class="breadcrumb-nav">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="https://portotheme.com/html/porto_ecommerce/demo_4/index.html"><i class="icon-home"></i></a></li>
+            <li class="breadcrumb-item"><a href="./Porto - Bootstrap eCommerce Template_files/product.html">Shoes</a></li>
+        </ol>
+    </nav>
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="cart-table-container">
+                    <table class="table table-cart">
+                        <thead>
+                        <tr>
+                            <th class="product-col">Ürün</th>
+                            <th class="price-col">Fiyat</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <th:block if="${ baskets != null }">
+                            <tr class="product-row" th:each=" item : ${ baskets } " >
+                            <td class="product-col">
+                                <figure class="product-image-container">
+                                    <a href="product.html" class="product-image">
+                                        <img th:src="@{'/uploads/'+ ${item.imageName} }">
+                                    </a>
+                                </figure>
+                                <h2 class="product-title">
+                                    <a th:href="@{'/detail/'+ ${item.pid} }" th:text="${item.ptitle}"></a>
+                                </h2>
+                            </td>
+                            <td th:text="${item.price}" ></td>
+                        </tr>
+                        </th:block>
+
+                        </tbody>
+
+                        <tfoot>
+                        <tr>
+                            <td colspan="4" class="clearfix">
+                                <div class="float-left">
+                                    <a href="./" class="btn btn-outline-secondary">Alışverişe Devam Et</a>
+                                </div>
+
+
+                            </td>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div><!-- End .cart-table-container -->
+
+
+            </div><!-- End .col-lg-8 -->
+
+            <div class="col-lg-4">
+                <div class="cart-summary">
+                    <h3>Sepet Özeti</h3>
+                    <div class="collapse" id="total-estimate-section" style="">
+
+                    </div><!-- End #total-estimate-section -->
+
+                    <table class="table table-totals">
+                        <tbody>
+                        <tr>
+                            <td>Toplam Fiyat</td>
+                            <td th:text=" ${ total.total + '₺' }" ></td>
+                        </tr>
+
+                        <tr>
+                            <td>Kargo</td>
+                            <td>15.00₺</td>
+                        </tr>
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <td>Genel Toplam</td>
+                            <td th:text="${ (total.total + 15) + '₺' }" ></td>
+                        </tr>
+                        </tfoot>
+                    </table>
+
+                </div><!-- End .cart-summary -->
+            </div>
+
+
+        </div><!-- End .row -->
+    </div>
+
+
+</div>
+</body>
+</html>

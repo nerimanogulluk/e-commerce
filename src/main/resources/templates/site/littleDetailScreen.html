@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="site/layout">
+<head>
+    <title>Detail</title>
+</head>
+<body>
+
+<div layout:fragment="detail" class="col-lg-12 mb-2">
+
+    <nav aria-label="breadcrumb" class="breadcrumb-nav">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="https://portotheme.com/html/porto_ecommerce/demo_4/index.html"><i class="icon-home"></i></a></li>
+            <li class="breadcrumb-item"><a href="./Porto - Bootstrap eCommerce Template_files/product.html">Shoes</a></li>
+        </ol>
+    </nav>
+
+    <div class="product-single-container product-single-default">
+        <div class="row">
+            <div class="col-md-5 product-single-gallery">
+                <div class="product-slider-container">
+                    <div class="product-single-carousel owl-carousel owl-theme">
+
+                        <div class="product-item" th:each="img : ${ images }">
+                            <img class="product-single-image" th:src="@{${'/uploads/'+img.image_Name}}"  th:attr="data-zoom-image=${'/uploads/'+img.image_Name}"  />
+
+                        </div>
+                    </div>
+                    <!-- End .product-single-carousel -->
+                    <span class="prod-full-screen">
+									<i class="icon-plus"></i>
+								</span>
+                </div>
+                <div class="prod-thumbnail owl-dots" id='carousel-custom-dots'>
+
+                    <th:block th:each="img : ${ images }" >
+                        <div class="owl-dot">
+                            <img th:src="@{${'/uploads/'+img.image_Name}}" />
+                        </div>
+                    </th:block>
+
+                </div>
+            </div><!-- End .product-single-gallery -->
+
+            <div class="col-md-7 product-single-details">
+                <h1 class="product-title" th:text="${product.ptitle}" ></h1>
+
+                <div class="ratings-container">
+                    <div class="product-ratings">
+                        <span class="ratings" style="width:90%"></span><!-- End .ratings -->
+                    </div><!-- End .product-ratings -->
+
+
+                </div><!-- End .ratings-container -->
+
+                <hr class="short-divider">
+
+                <div class="price-box">
+                    <span class="product-price"  th:text="${product.price} + '₺'" ></span>
+                </div><!-- End .price-box -->
+
+                <div class="product-desc">
+                    <p th:utext="${product.detail}" > </p>
+                </div><!-- End .product-desc -->
+
+
+
+                <hr class="divider">
+
+                <div class="product-action">
+                    <div class="product-single-qty">
+                        <input class="horizontal-quantity form-control" type="text">
+                    </div><!-- End .product-single-qty -->
+
+                    <a th:href="@{'/addBasket/'+ ${product.pid} }" class="btn btn-dark add-cart icon-shopping-cart" title="Add to Cart">Sepete Ekle</a>
+                </div><!-- End .product-action -->
+
+                <hr class="divider mb-1">
+
+                <div class="product-single-share">
+                    <label class="sr-only">Share:</label>
+
+                    <div class="social-icons mr-2">
+                        <a href="#" class="social-icon social-facebook icon-facebook" target="_blank" title="Facebook"></a>
+                        <a href="#" class="social-icon social-twitter icon-twitter" target="_blank" title="Twitter"></a>
+                        <a href="#" class="social-icon social-linkedin fab fa-linkedin-in" target="_blank" title="Linkedin"></a>
+                        <a href="#" class="social-icon social-gplus fab fa-google-plus-g" target="_blank" title="Google +"></a>
+                        <a href="#" class="social-icon social-mail icon-mail-alt" target="_blank" title="Mail"></a>
+                    </div><!-- End .social-icons -->
+
+                    <a href="#" class="add-wishlist" title="Add to Wishlist">Alışveriş Listeme ekle</a>
+                </div><!-- End .product single-share -->
+            </div><!-- End .product-single-details -->
+        </div><!-- End .row -->
+    </div><!-- End .product-single-container -->
+
+
+</div>
+</body>
+</html>
